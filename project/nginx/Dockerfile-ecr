@@ -1,0 +1,2 @@
+FROM 165485842251.dkr.ecr.ap-south-1.amazonaws.com/care-dev-nginx:nginx
+ADD nginx/default.conf /etc/nginx/conf.d
