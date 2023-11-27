@@ -1,4 +1,5 @@
 #!/bin/sh
+$2=`git log -n 1 --abbrev-commit --format=%h`
 echo " "
 echo "!!!!!!! This script would pull the image from Dockerhub and push to ECR based on your requirement."
 echo "!!!!!!! Please refer to your Dockerfile you are referring to"
