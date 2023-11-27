@@ -1,0 +1,38 @@
+version: "3"
+services:
+  nginx:
+    build:
+      context: .
+      dockerfile: nginx/Dockerfile
+    ports:
+      - "80:80"
+    networks:
+      - caredev
+    volumes:
+      - .:/var/www/html
+      - ./logs/nginx:/var/log/nginx/
+  php:
+    build:
+      context: .
+      dockerfile: Dockerfile-default
+    networks:
+      - caredev
+    volumes:
+      - .:/var/www/html/
+      - ./logs/php.log:/var/log/fpm-php.www.log
+  db:
+    container_name: care-dev-pgsql
+    image: postgres:14.10-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: chidev
+      POSTGRES_PASSWORD: Root@123      
+    networks:
+      - caredev
+    volumes:
+      - ./dbscripts:/tmp/dbscripts
+    ports:
+      - 5432:5432
+networks:
+  caredev:
+    name: caredev

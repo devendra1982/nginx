@@ -1,0 +1,25 @@
+version: "3"
+services:
+  nginx:
+    build:
+      context: .
+      dockerfile: nginx/Dockerfile
+    ports:
+      - "80:80"
+    networks:
+      - caredev
+    volumes:
+      - .:/var/www/html
+      - ./logs/nginx:/var/log/nginx/
+  php:
+    build:
+      context: .
+      dockerfile: Dockerfile-alpine
+    networks:
+      - caredev
+    volumes:
+      - .:/var/www/html/
+      - ./logs/php.log:/var/log/fpm-php.www.log
+networks:
+  caredev:
+    name: caredev

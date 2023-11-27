@@ -1,0 +1,13 @@
+FROM php:8.2.9-fpm-alpine
+#COPY docker/dev/000-default.conf /etc/apache2/sites-available/000-default.conf
+COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
+RUN install-php-extensions gd xdebug mbstring xml intl curl pgsql redis
+RUN apk add busybox-extras
+#RUN apt-get update && apt-get install postgresql-client -y && apt-get install telnet -y && apt-get install iputils-ping -y
+RUN apk --update add postgresql-client
+#RUN apt-get update && apt-get install postgresql-client -y && apt-get install telnet -y && apt-get install iputils-ping -y
+#RUN a2enmod rewrite headers
+#COPY docker/dev/xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
+#COPY docker/dev/expose-env.conf /etc/apache2/conf-enabled/expose-env.conf 
+#WORKDIR /var/www/html
+CMD ["php-fpm"]
